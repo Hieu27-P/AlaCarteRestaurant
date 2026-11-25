@@ -13,13 +13,14 @@ namespace MenuService.Controllers
         public CategoriesController(AppDbContext db) => _db = db;
 
         [HttpGet]
-        public async Task<IActionResult> GetAll() => Ok(await _db.Categories.AsNoTracking().ToListAsync());
+        public async Task<IActionResult> GetAll() => Ok(await GetCategoryResponses().ToListAsync());
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var entity = await _db.Categories.FindAsync(id);
-            return entity is null ? NotFound(new { message = "Không tìm thấy danh mục" }) : Ok(entity);
+            var result = await GetCategoryResponses(includeMenuItems: true)
+                .FirstOrDefaultAsync(c => c.Id == id);
+            return result is null ? NotFound(new { message = "Không tìm thấy danh mục" }) : Ok(result);
         }
 
         [HttpPost]
@@ -36,7 +37,9 @@ namespace MenuService.Controllers
             _db.Categories.Add(entity);
             await _db.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new { id = entity.Id }, entity);
+            var response = await GetCategoryResponses().FirstAsync(c => c.Id == entity.Id);
+
+            return CreatedAtAction(nameof(GetById), new { id = entity.Id }, response);
         }
 
         [HttpDelete("{id}")]
@@ -61,7 +64,46 @@ namespace MenuService.Controllers
             entity.UpdatedAt = DateTime.Now;
 
             await _db.SaveChangesAsync();
-            return Ok(entity);
+            var response = await GetCategoryResponses().FirstAsync(c => c.Id == entity.Id);
+            return Ok(response);
         }
+
+        private IQueryable<CategoryDetailResponseDto> GetCategoryResponses(bool includeMenuItems = false) =>
+            _db.Categories
+                .AsNoTracking()
+                .Select(c => new CategoryDetailResponseDto
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    IsActive = c.IsActive,
+                    CreatedAt = c.CreatedAt,
+                    UpdatedAt = c.UpdatedAt,
+                    MenuItems = includeMenuItems
+                        ? c.MenuItems.Select(m => new MenuItemResponseDto
+                        {
+                            Id = m.Id,
+                            CategoryId = m.CategoryId,
+                            Name = m.Name,
+                            Description = m.Description,
+                            Price = m.Price,
+                            ImageUrl = m.ImageUrl,
+                            IsAvailable = m.IsAvailable,
+                            CreatedAt = m.CreatedAt,
+                            UpdatedAt = m.UpdatedAt,
+                            OptionGroups = m.OptionGroups.Select(g => new OptionGroupResponseDto
+                            {
+                                Id = g.Id,
+                                Name = g.Name,
+                                Options = g.MenuOptions.Select(o => new OptionResponseDto
+                                {
+                                    Id = o.Id,
+                                    Name = o.Name,
+                                    ExtraPrice = o.ExtraPrice,
+                                    IsAvailable = o.IsAvailable
+                                }).ToList()
+                            }).ToList()
+                        }).ToList()
+                        : null
+                });
     }
 }

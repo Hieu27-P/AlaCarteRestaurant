@@ -7,25 +7,30 @@ namespace MenuService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MenuOptionsController : ControllerBase
+    public class MenuOptionsController : Controller
     {
         private readonly AppDbContext _db;
-        public MenuOptionsController(AppDbContext db) =>_db = db;
+        public MenuOptionsController(AppDbContext db) => _db = db;
 
         [HttpGet]
-        public async Task<IActionResult> GetAll() => Ok(await _db.MenuOptions.AsNoTracking().ToListAsync());
+        public async Task<IActionResult> GetAll() => Ok(await GetMenuOptionResponses().ToListAsync());
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var entity = await _db.MenuOptions.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-
-            return entity is null ? NotFound(new { message = "Không tìm thấy tùy chọn món ăn" }) : Ok(entity);
+            var result = await GetMenuOptionResponses(includeOptionGroup: true).FirstOrDefaultAsync(o => o.Id == id);
+            return result is null ? NotFound(new { message = $"Không tìm thấy tùy chọn có ID = {id}" }) : Ok(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(MenuOptionDto dto)
-        { 
+        {
+            var groupExists = await _db.MenuOptionGroups.AnyAsync(g => g.Id == dto.OptionGroupId);
+            if (!groupExists)
+            {
+                return BadRequest(new { message = $"Nhóm tùy chọn có ID = {dto.OptionGroupId} không tồn tại" });
+            }
+
             var entity = new MenuOption
             {
                 OptionGroupId = dto.OptionGroupId,
@@ -37,19 +42,8 @@ namespace MenuService.Controllers
             _db.MenuOptions.Add(entity);
             await _db.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new { id = entity.Id }, entity);
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var entity = await _db.MenuOptions.FindAsync(id);
-            if (entity is null)
-                return NotFound(new { message = "Không tìm thấy tùy chọn món ăn" });
-
-            _db.MenuOptions.Remove(entity);
-            await _db.SaveChangesAsync();
-            return Ok();
+            var response = await GetMenuOptionResponses().FirstAsync(o => o.Id == entity.Id);
+            return CreatedAtAction(nameof(GetById), new { id = entity.Id }, response);
         }
 
         [HttpPut("{id}")]
@@ -57,7 +51,15 @@ namespace MenuService.Controllers
         {
             var entity = await _db.MenuOptions.FindAsync(id);
             if (entity is null)
-                return NotFound(new { message = "Không tìm thấy tùy chọn món ăn" });
+            {
+                return NotFound(new { message = $"Không tìm thấy tùy chọn có ID = {id}" });
+            }
+
+            var groupExists = await _db.MenuOptionGroups.AnyAsync(g => g.Id == dto.OptionGroupId);
+            if (!groupExists)
+            {
+                return BadRequest(new { message = $"Nhóm tùy chọn có ID = {dto.OptionGroupId} không tồn tại" });
+            }
 
             entity.OptionGroupId = dto.OptionGroupId;
             entity.Name = dto.Name;
@@ -65,7 +67,62 @@ namespace MenuService.Controllers
             entity.IsAvailable = dto.IsAvailable;
 
             await _db.SaveChangesAsync();
-            return Ok(entity);
+
+            var response = await GetMenuOptionResponses().FirstAsync(o => o.Id == entity.Id);
+            return Ok(response);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var entity = await _db.MenuOptions.FindAsync(id);
+            if (entity is null)
+            {
+                return NotFound(new { message = $"Không tìm thấy tùy chọn có ID = {id}" });
+            }
+
+            _db.MenuOptions.Remove(entity);
+            await _db.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        private IQueryable<MenuOptionResponseDto> GetMenuOptionResponses(bool includeOptionGroup = false) =>
+            _db.MenuOptions
+                .AsNoTracking()
+                .Select(o => new MenuOptionResponseDto
+                {
+                    Id = o.Id,
+                    OptionGroupId = o.OptionGroupId,
+                    Name = o.Name,
+                    ExtraPrice = o.ExtraPrice,
+                    IsAvailable = o.IsAvailable,
+                    OptionGroup = includeOptionGroup
+                        ? new OptionGroupResponseDto
+                        {
+                            Id = o.OptionGroup.Id,
+                            Name = o.OptionGroup.Name,
+                            Options = o.OptionGroup.MenuOptions.Select(sibling => new OptionResponseDto
+                            {
+                                Id = sibling.Id,
+                                Name = sibling.Name,
+                                ExtraPrice = sibling.ExtraPrice,
+                                IsAvailable = sibling.IsAvailable
+                            }).ToList(),
+                            MenuItems = o.OptionGroup.MenuItems.Select(m => new MenuItemResponseDto
+                            {
+                                Id = m.Id,
+                                CategoryId = m.CategoryId,
+                                Name = m.Name,
+                                Description = m.Description,
+                                Price = m.Price,
+                                ImageUrl = m.ImageUrl,
+                                IsAvailable = m.IsAvailable,
+                                CreatedAt = m.CreatedAt,
+                                UpdatedAt = m.UpdatedAt
+                            }).ToList()
+                        }
+                        : null
+                });
     }
 }

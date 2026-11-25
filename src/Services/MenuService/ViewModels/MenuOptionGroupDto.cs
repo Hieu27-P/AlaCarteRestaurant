@@ -4,10 +4,8 @@ namespace MenuService.ViewModels
 {
     public class MenuOptionGroupDto
     {
-        public int? MenuItemId { get; set; }
-
-        [Required(ErrorMessage = "Tên nhóm tùy chọn không được để trống")]
-        [MaxLength(100)]
+        [Required(ErrorMessage = "Tên nhóm tùy chọn là bắt buộc")]
+        [MaxLength(100, ErrorMessage = "Tên nhóm tùy chọn tối đa 100 ký tự")]
         public string Name { get; set; } = string.Empty;
     }
 }

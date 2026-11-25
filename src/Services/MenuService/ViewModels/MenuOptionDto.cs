@@ -4,15 +4,15 @@ namespace MenuService.ViewModels
 {
     public class MenuOptionDto
     {
-        [Required]
+        [Required(ErrorMessage = "Nhóm tùy chọn là bắt buộc")]
         public int OptionGroupId { get; set; }
 
-        [Required(ErrorMessage = "Tên tùy chọn không được để trống")]
-        [MaxLength(100)]
+        [Required(ErrorMessage = "Tên tùy chọn là bắt buộc")]
+        [MaxLength(100, ErrorMessage = "Tên tùy chọn tối đa 100 ký tự")]
         public string Name { get; set; } = string.Empty;
 
-        [Range(0, double.MaxValue, ErrorMessage = "Giá thêm không được âm")]
-        public decimal ExtraPrice { get; set; } = 0;
+        [Range(0, double.MaxValue, ErrorMessage = "Giá thêm phải là một số dương")]
+        public decimal ExtraPrice { get; set; }
 
         public bool IsAvailable { get; set; } = true;
     }
