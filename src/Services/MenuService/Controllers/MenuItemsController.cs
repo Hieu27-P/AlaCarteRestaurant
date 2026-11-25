@@ -23,7 +23,7 @@ namespace MenuService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateMenuItemDto dto)
+        public async Task<IActionResult> Create(MenuItemDto dto)
         {
             var now = DateTime.Now;
             var entity = new MenuItem
@@ -57,10 +57,10 @@ namespace MenuService.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, UpdateMenuItemDto dto)
+        public async Task<IActionResult> Update(int id, MenuItemDto dto)
         {
             var entity = await _db.MenuItems.FindAsync(id);
-            if (entity == null)
+            if (entity is null)
             {
                 return NotFound(new { message = $"Không tìm thấy món ăn có ID = {id}" });
             }

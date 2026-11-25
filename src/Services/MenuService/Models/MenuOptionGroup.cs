@@ -19,14 +19,14 @@ namespace MenuService.Models
         [Column("id", TypeName = "int(11)")]
         public int Id { get; set; }
         [Column("menu_item_id", TypeName = "int(11)")]
-        public int MenuItemId { get; set; }
+        public int? MenuItemId { get; set; }
         [Column("name")]
         [StringLength(100)]
         public string Name { get; set; } = null!;
 
         [ForeignKey("MenuItemId")]
         [InverseProperty("MenuOptionGroups")]
-        public virtual MenuItem MenuItem { get; set; } = null!;
+        public virtual MenuItem? MenuItem { get; set; }
         [InverseProperty("OptionGroup")]
         public virtual ICollection<MenuOption> MenuOptions { get; set; }
     }

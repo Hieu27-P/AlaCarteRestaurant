@@ -2,11 +2,12 @@
 
 namespace MenuService.ViewModels
 {
-    public class UpdateCategoryDto
+    public class MenuOptionGroupDto
     {
-        [Required(ErrorMessage = "Tên danh mục không được để trống")]
+        public int? MenuItemId { get; set; }
+
+        [Required(ErrorMessage = "Tên nhóm tùy chọn không được để trống")]
         [MaxLength(100)]
         public string Name { get; set; } = string.Empty;
-        public bool IsActive { get; set; }
     }
 }

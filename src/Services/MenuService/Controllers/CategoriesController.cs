@@ -23,7 +23,7 @@ namespace MenuService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCategoryDto dto)
+        public async Task<IActionResult> Create(CategoryDto dto)
         {
             var entity = new Category
             {
@@ -50,7 +50,7 @@ namespace MenuService.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] UpdateCategoryDto dto)
+        public async Task<IActionResult> Update(int id, CategoryDto dto)
         {
             var entity = await _db.Categories.FindAsync(id);
             if (entity is null)

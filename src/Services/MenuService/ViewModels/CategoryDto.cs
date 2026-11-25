@@ -2,7 +2,7 @@
 
 namespace MenuService.ViewModels
 {
-    public class CreateCategoryDto
+    public class CategoryDto
     {
         [Required(ErrorMessage = "Tên danh mục không được để trống")]
         [MaxLength(100)]

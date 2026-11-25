@@ -2,7 +2,7 @@
 
 namespace MenuService.ViewModels
 {
-    public class UpdateMenuItemDto
+    public class MenuItemDto
     {
         public int? CategoryId { get; set; }
         [Required(ErrorMessage = "Tên món ăn là bắt buộc")]
@@ -13,5 +13,6 @@ namespace MenuService.ViewModels
         public decimal Price { get; set; }
         public string? ImageUrl { get; set; }
         public bool IsAvailable { get; set; } = true;
+        public List<MenuOptionGroupDto> MenuOptionGroups { get; set; } = new();
     }
 }
