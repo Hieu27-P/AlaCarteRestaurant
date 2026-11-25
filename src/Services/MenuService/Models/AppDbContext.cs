@@ -55,6 +55,25 @@ namespace MenuService.Models
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("menu_items_ibfk_1");
+
+                entity.HasMany(d => d.OptionGroups)
+                    .WithMany(p => p.MenuItems)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "MenuItemOptionGroup",
+                        l => l.HasOne<MenuOptionGroup>().WithMany().HasForeignKey("OptionGroupId").HasConstraintName("fk_miog_option_group"),
+                        r => r.HasOne<MenuItem>().WithMany().HasForeignKey("MenuItemId").HasConstraintName("fk_miog_menu_item"),
+                        j =>
+                        {
+                            j.HasKey("MenuItemId", "OptionGroupId").HasName("PRIMARY").HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+
+                            j.ToTable("menu_item_option_groups");
+
+                            j.HasIndex(new[] { "OptionGroupId" }, "idx_option_group_id");
+
+                            j.IndexerProperty<int>("MenuItemId").HasColumnType("int(11)").HasColumnName("menu_item_id");
+
+                            j.IndexerProperty<int>("OptionGroupId").HasColumnType("int(11)").HasColumnName("option_group_id");
+                        });
             });
 
             modelBuilder.Entity<MenuOption>(entity =>
@@ -65,15 +84,6 @@ namespace MenuService.Models
                     .WithMany(p => p.MenuOptions)
                     .HasForeignKey(d => d.OptionGroupId)
                     .HasConstraintName("menu_options_ibfk_1");
-            });
-
-            modelBuilder.Entity<MenuOptionGroup>(entity =>
-            {
-                entity.HasOne(d => d.MenuItem)
-                    .WithMany(p => p.MenuOptionGroups)
-                    .HasForeignKey(d => d.MenuItemId)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("menu_option_groups_ibfk_1");
             });
 
             OnModelCreatingPartial(modelBuilder);

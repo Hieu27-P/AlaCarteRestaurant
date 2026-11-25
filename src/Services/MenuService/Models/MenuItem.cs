@@ -12,7 +12,7 @@ namespace MenuService.Models
     {
         public MenuItem()
         {
-            MenuOptionGroups = new HashSet<MenuOptionGroup>();
+            OptionGroups = new HashSet<MenuOptionGroup>();
         }
 
         [Key]
@@ -45,7 +45,9 @@ namespace MenuService.Models
         [ForeignKey("CategoryId")]
         [InverseProperty("MenuItems")]
         public virtual Category? Category { get; set; }
-        [InverseProperty("MenuItem")]
-        public virtual ICollection<MenuOptionGroup> MenuOptionGroups { get; set; }
+
+        [ForeignKey("MenuItemId")]
+        [InverseProperty("MenuItems")]
+        public virtual ICollection<MenuOptionGroup> OptionGroups { get; set; }
     }
 }
