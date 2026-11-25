@@ -13,17 +13,13 @@ namespace MenuService.Controllers
         public MenuItemsController(AppDbContext db) => _db = db;
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var list = await _db.MenuItems.AsNoTracking().ToListAsync();
-            return list is null ? NotFound(new { message = "Không tìm thấy danh sách món ăn" }) : Ok(list);
-        }
+        public async Task<IActionResult> GetAll() => Ok(await _db.MenuItems.AsNoTracking().ToListAsync());
 
         [HttpGet("id")]
         public async Task<IActionResult> GetById(int id)
         {
-            var item = await _db.MenuItems.FindAsync(id);
-            return item is null ? NotFound(new { message = $"Không tìm thấy món ăn có ID = {id}" }) : Ok(item);
+            var entity = await _db.MenuItems.FindAsync(id);
+            return entity is null ? NotFound(new { message = $"Không tìm thấy món ăn có ID = {id}" }) : Ok(entity);
         }
 
         [HttpPost]
@@ -45,16 +41,16 @@ namespace MenuService.Controllers
             _db.MenuItems.Add(entity);
             await _db.SaveChangesAsync();
 
-            return Ok(entity);
+            return CreatedAtAction(nameof(GetById), new { id = entity.Id }, entity);
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var item = await _db.MenuItems.FindAsync(id);
+            var entity = await _db.MenuItems.FindAsync(id);
 
-            if (item is null) return NotFound(new { message = $"Không tìm thấy món ăn có ID = {id}" });
+            if (entity is null) return NotFound(new { message = $"Không tìm thấy món ăn có ID = {id}" });
 
-            _db.MenuItems.Remove(item);
+            _db.MenuItems.Remove(entity);
             await _db.SaveChangesAsync();
 
             return Ok();
