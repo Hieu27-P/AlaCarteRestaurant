@@ -1,3 +1,6 @@
 <Solution>
+  <Folder Name="/ApiGateways/">
+    <Project Path="src/ApiGateways/ApiGateways.csproj" Id="396018e8-802e-4864-af10-5aaa4f7244d3" />
+  </Folder>
   <Project Path="src/Services/MenuService/MenuService.csproj" Id="4afb64d9-eefe-4f49-8ab0-0c670c17e0b4" />
 </Solution>
