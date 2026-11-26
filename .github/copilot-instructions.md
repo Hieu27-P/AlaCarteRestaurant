@@ -16,22 +16,15 @@
 - Style: Tailwind CSS v4 (dùng `@import "tailwindcss"` và `@theme` trong file CSS, **không có** `tailwind.config.js`, không viết theo cú pháp v3)
 - Không tự cài thêm thư viện mới khi chưa hỏi người dùng.
 
-# Quy tắc thẩm mỹ & UI/UX (bắt buộc)
-
-- Phong cách: hiện đại, sạch sẽ, ưu tiên Light mode, nền trắng/xám nhạt, font sans-serif rõ ràng.
-- Palette (khai báo thành token trong `@theme`, không hard-code màu rải rác):
-  - Primary: `emerald-600`, hover `emerald-700`, nền nhạt `emerald-50`
-  - Nền trang: `gray-50`, thẻ/modal: `white`, viền: `gray-200`
-  - Chữ chính: `gray-900`, chữ phụ: `gray-500`
-  - Nguy hiểm/xóa: `red-600`
-- Bắt buộc responsive. Tối ưu thao tác chạm: nút cao tối thiểu 44px, khoảng cách giữa các phần tử bấm được thoáng, tránh hover-only.
-- Mọi màn hình tải dữ liệu từ API phải xử lý đủ 3 trạng thái:
-  1. **Loading:** Skeleton hoặc Spinner.
-  2. **Empty State:** thông báo gọn gàng khi danh sách trống (kèm gợi ý hành động nếu phù hợp).
-  3. **Error State:** thông báo lỗi rõ ràng, có nút "Thử lại".
-- Mọi nút gửi dữ liệu phải bị vô hiệu hóa và hiện trạng thái đang xử lý khi đang gọi API.
-- Phản hồi thao tác bằng toast (thành công/thất bại). Không dùng `alert()`/`confirm()` của trình duyệt, dùng modal xác nhận của dự án.
-- **Ngôn ngữ giao diện:** tiếng Việt. **Code, tên biến, tên file, comment:** tiếng Anh.
+# Quy tắc thẩm mỹ & UI/UX (Admin Dashboard - Bắt buộc)
+- Phong cách: Minimalist Data-Centric Admin (tương tự Linear / Stripe Dashboard). Tuyệt đối không thiết kế kiểu ứng dụng tiêu dùng màu mè.
+- Hình khối & Viền: Chỉ dùng bo góc nhẹ (`rounded` hoặc `rounded-md`, tối đa 6px). Không dùng `rounded-xl`, `rounded-2xl` hay `rounded-full` (trừ chấm trạng thái nhỏ). Phân tách khối bằng đường viền mỏng `border border-slate-200`, hạn chế tối đa `box-shadow`.
+- Mật độ & Cỡ chữ (Compact): Tối ưu không gian hiển thị dữ liệu.
+  - Chữ nội dung & bảng dữ liệu: `text-sm` (14px) hoặc `text-xs` (12px) cho nhãn phụ.
+  - Tiêu đề trang (H1): `text-lg font-semibold` (18px).
+  - Padding gọn gàng (`p-4` cho khung chính, `py-2 px-3` cho các nút bấm và dòng bảng).
+- Màu sắc tiết chế: Nền chính `bg-slate-50`, bề mặt thẻ/bảng `bg-white`, chữ chính `text-slate-800`, chữ phụ `text-slate-500`. Chỉ dùng màu xanh lá (`emerald-600`) làm điểm nhấn duy nhất cho nút hành động chính (Primary button) và mục menu đang chọn.
+- Header tối giản: Chỉ hiển thị tiêu đề trang và nút hành động chính (nếu có). Không đặt các badge trạng thái kết nối server thừa thãi trên Header.
 
 # Quy tắc kiến trúc code Frontend
 
