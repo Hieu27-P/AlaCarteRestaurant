@@ -1,0 +1,704 @@
+:root {
+    --social-top: 30px;
+    --middle-icon: 20px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Header Top */
+.top { background-color: #ceb347; border-bottom: 1px solid #e6e6e6; }
+
+ul {padding: 0; margin: 0;}
+ul,li {list-style: none;}
+a {text-decoration: none; color: inherit;}
+
+.social li {display: inline-block; }
+.social li a {
+    display: inline-block; 
+    width: var(--social-top); height: var(--social-top); line-height: var(--social-top); 
+    text-align: center;
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.top_story a {
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    line-height: 30px;
+    
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+        font-weight: 300;
+    font-style: italic;
+    letter-spacing: 1px;
+    
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.language li {display: none;}
+.location-language li {display: inline-block;}
+.location-language li a {
+    display: inline-block; 
+    width: var(--social-top); height: var(--social-top); line-height: var(--social-top); 
+    text-align: center;
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+/* Hiệu ứng hover top */
+.social li a:hover {
+    transform: scale(1.2);
+}
+
+.location-language li a:hover {
+    transform: scale(1.2);
+}
+
+.top_story a:hover {
+    transform: scale(1.2);
+    color: #0b8600;
+}
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+}
+
+/* Header middle */
+.middle { 
+    background-color: #101010; 
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.middle .logo { 
+    max-width: 80px;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.middle .search-form { 
+    display: flex;
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.middle .search-form input { 
+    width: 100%;
+    border: 0;
+    padding: 8px 15px;
+    outline: none;
+}
+
+.middle .search-form button {
+    border: 0;
+    background-color: #fff;
+    padding: 0 15px;
+    cursor: pointer;
+    color: #101010;
+}
+
+.icon-group {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+}
+
+.icon-group li {
+    position: relative;
+    display: inline-block; 
+    margin-left: 10px;
+}
+
+.icon-group li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--middle-icon);
+    height: var(--middle-icon);
+    color: #ffffff;
+    font-size: 22px;
+    border-radius: 50%; 
+    transition: all 0.3s ease, color 0.3s ease;
+}
+
+.icon-group li a:hover {
+    color: #c5a059;
+    transform: translateY(-2px);
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}
+
+.icon-group li span {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    display: inline-block;
+    background-color: #c5a059;
+    color: #fff;
+    width: 15px;
+    height: 15px;
+    font-size: 10px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+/* Header main */
+.main {
+    background-color: #101010;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.menu-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: 30px;
+}
+
+.menu-nav li{
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.menu-nav li a {
+    display: inline-block;
+    padding: 10px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 500;
+    text-transform: uppercase;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.menu-nav li a:hover {
+    color: #c5a059;
+}
+
+.menu-nav li a i {
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+}
+
+.menu-nav li.has-dropdown:hover > a i {
+    transform: rotate(180deg);
+}
+
+.menu-nav li.has-dropdown {
+    position: relative;
+}
+
+.sub-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 260px;
+    background-color: #101010;
+    border-top: 2px solid #c5a059;
+    padding: 10px 0;
+    margin: 0;
+    text-align: left;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    z-index: 999;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.menu-nav li.has-dropdown:hover .sub-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.sub-menu li {
+    display: block;     
+    margin: 0;
+}
+
+.sub-menu li a {
+    display: block;
+    padding: 10px 20px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: none;
+    line-height: 1.4;
+    transition: all 0.2s ease;
+}
+
+.sub-menu li a::after {
+    display: none;
+}
+
+.sub-menu li a:hover {
+    color: #c5a059;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding-left: 25px;
+}
+
+/* Banner Carousel */
+/* Ảnh banner */
+.banner {
+    background-color: #faf8f3;
+}
+
+.banner .carousel-inner {
+    clip-path: ellipse(100% 100% at 50% 0%);
+}
+
+.banner__img {
+    height: 100%;
+    object-fit: cover;
+}
+/* Hiệu ứng fade */
+.banner.carousel-fade .carousel-item {
+    transition: opacity 1.5s ease-in-out;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .banner__img {
+        height: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner__img {
+        height: 180px;
+    }
+}
+
+/* ===== Section câu chuyện ===== */
+.story {
+    scroll-margin-top: 80px;
+    background-color: #faf8f3;
+    padding: 60px 0 80px;
+}
+
+/* Ảnh */
+.story__image-wrap {
+    position: relative;
+}
+
+/* Khung viền lệch phía sau ảnh cho có điểm nhấn */
+.story__image-wrap::before {
+    content: "";
+    position: absolute;
+    top: 20px;
+    left: -20px;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #8a9a5b;
+    z-index: 0;
+}
+
+.story__image {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Nội dung */
+.story__label {
+    display: inline-block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #8a9a5b;
+}
+
+.story__title {
+    margin-bottom: 16px;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #3b4a2f;
+}
+
+.story__divider {
+    width: 60px;
+    height: 3px;
+    margin-bottom: 24px;
+    background-color: #8a9a5b;
+}
+
+.story__text {
+    margin-bottom: 16px;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #555;
+    text-align: justify;
+}
+
+/* 3 giá trị nổi bật */
+.story__values {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin: 28px 0;
+    padding: 0;
+    list-style: none;
+    color: #555;
+}
+
+.story__values span {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #3b4a2f;
+}
+
+/* Nút */
+.story__btn {
+    display: inline-block;
+    padding: 12px 32px;
+    border: 2px solid #3b4a2f;
+    color: #3b4a2f;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.story__btn:hover {
+    background-color: #3b4a2f;
+    color: #fff;
+}
+/* ===== Responsive ===== */
+@media (max-width: 991px) {
+    .story {
+        padding: 50px 0;
+    }
+    .story__image {
+        height: 320px;
+    }
+    .story__image-wrap::before {
+        left: -10px;
+        top: 10px;
+    }
+    .story__title {
+        font-size: 2rem;
+    }
+}
+
+/* ===== Phần dùng chung ===== */
+.section-label {
+    display: inline-block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #8a9a5b;
+}
+
+.section-title {
+    margin-bottom: 16px;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #3b4a2f;
+}
+
+.section-divider {
+    width: 60px;
+    height: 3px;
+    background-color: #8a9a5b;
+}
+
+.btn-tmc {
+    display: inline-block;
+    padding: 12px 36px;
+    border: 2px solid #3b4a2f;
+    background-color: #3b4a2f;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-tmc:hover {
+    background-color: transparent;
+    color: #3b4a2f;
+}
+
+/* Khoảng cách các section */
+.booking,
+.offers,
+.guests,
+.reviews {
+    padding: 80px 0;
+}
+
+/* ===== Đặt bàn ===== */
+.booking {
+    background-color: #fff;
+}
+
+.booking__info {
+    margin-bottom: 24px;
+    text-align: center;
+}
+.booking__info p {
+    color: #555;
+    line-height: 1.7;
+    text-align: justify;
+}
+
+.booking__form {
+    padding: 32px;
+    background-color: #d4c49c;
+    border: 1px solid #e6e2d3;
+    border-radius: 8px;
+}
+
+.booking__form .form-control:focus {
+    border-color: #8a9a5b;
+    box-shadow: 0 0 0 0.2rem rgba(138, 154, 91, 0.25);
+}
+
+/* ===== Ưu đãi ===== */
+.offers {
+    background-color: #faf8f3;
+}
+
+.offers__card {
+    height: 100%;
+    overflow: hidden;
+    background-color: #fff;
+    border: 1px solid #e6e2d3;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.offers__card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 24px rgba(59, 74, 47, 0.12);
+}
+
+.offers__img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.offers__body {
+    padding: 20px;
+}
+
+.offers__badge {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 4px 12px;
+    background-color: #8a9a5b;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.offers__title {
+    margin-bottom: 8px;
+    font-size: 1.25rem;
+    color: #3b4a2f;
+}
+
+.offers__text {
+    margin-bottom: 8px;
+    color: #555;
+    line-height: 1.7;
+}
+
+.offers__date {
+    color: #888;
+}
+
+.menu-teaser {
+    padding: 80px 0;
+    background-color: #fff;
+}
+
+.menu-teaser__img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+}
+
+.menu-teaser__text {
+    margin-bottom: 24px;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #555;
+    text-align: justify;
+}
+
+.btn-tmc {
+    text-decoration: none; /* để class này dùng được cho thẻ a */
+}
+
+@media (max-width: 767px) {
+    .menu-teaser { padding: 50px 0; }
+    .menu-teaser__img { height: 260px; }
+}
+
+/* ===== Khách nhà ===== */
+.guests {
+    background-color: #fff;
+}
+
+.guests__img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.guests .col-6,
+.guests .col-md-3 {
+    overflow: hidden;
+}
+
+.guests__img:hover {
+    transform: scale(1.06);
+}
+
+/* ===== Khách nói gì ===== */
+.reviews {
+    background-color: #faf8f3;
+}
+
+.reviews__card {
+    height: 100%;
+    padding: 28px;
+    background-color: #fff;
+    border: 1px solid #e6e2d3;
+}
+
+.reviews__stars {
+    margin-bottom: 12px;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    color: #d4a537;
+}
+
+.reviews__text {
+    margin-bottom: 20px;
+    color: #555;
+    line-height: 1.8;
+    font-style: italic;
+}
+
+.reviews__author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.reviews__author strong,
+.reviews__author small {
+    display: block;
+}
+
+.reviews__author small {
+    color: #888;
+}
+
+.reviews__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* ===== Footer ===== */
+.footer {
+    padding: 60px 0 0;
+    background-color: #3b4a2f;
+    color: #e6e2d3;
+}
+
+.footer__brand {
+    margin-bottom: 12px;
+    font-size: 1.6rem;
+    color: #fff;
+}
+
+.footer__heading {
+    margin-bottom: 14px;
+    font-size: 1.1rem;
+    color: #fff;
+}
+
+.footer__text {
+    line-height: 1.8;
+}
+
+.footer__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer__list li {
+    margin-bottom: 8px;
+}
+
+.footer__list a {
+    color: #e6e2d3;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer__list a:hover {
+    color: #fff;
+}
+
+.footer__bottom {
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    text-align: center;
+    font-size: 14px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 767px) {
+    .booking,
+    .offers,
+    .guests,
+    .reviews {
+        padding: 50px 0;
+    }
+
+    .section-title {
+        font-size: 1.7rem;
+    }
+
+    .booking__form {
+        padding: 20px;
+    }
+}

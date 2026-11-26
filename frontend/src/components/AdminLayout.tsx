@@ -3,17 +3,17 @@ import { Leaf, ListFilter, Menu, SlidersHorizontal, Tags, Utensils, X } from 'lu
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 
 const navigationItems = [
-  { label: 'Quản lý Danh mục', to: '/categories', icon: Tags },
-  { label: 'Quản lý Thực đơn', to: '/menu-items', icon: Utensils },
-  { label: 'Nhóm tùy chọn', to: '/menu-option-groups', icon: SlidersHorizontal },
-  { label: 'Tùy chọn món', to: '/menu-options', icon: ListFilter },
+  { label: 'Quản lý Danh mục', to: '/admin/categories', icon: Tags },
+  { label: 'Quản lý Thực đơn', to: '/admin/menu-items', icon: Utensils },
+  { label: 'Nhóm tùy chọn', to: '/admin/menu-option-groups', icon: SlidersHorizontal },
+  { label: 'Tùy chọn món', to: '/admin/menu-options', icon: ListFilter },
 ];
 
 const titlesByPath: Record<string, string> = {
-  '/categories': 'Quản lý Danh mục',
-  '/menu-items': 'Quản lý Thực đơn',
-  '/menu-option-groups': 'Nhóm tùy chọn',
-  '/menu-options': 'Tùy chọn món',
+  '/admin/categories': 'Quản lý Danh mục',
+  '/admin/menu-items': 'Quản lý Thực đơn',
+  '/admin/menu-option-groups': 'Nhóm tùy chọn',
+  '/admin/menu-options': 'Tùy chọn món',
 };
 
 function AdminLayout() {
@@ -40,7 +40,7 @@ function AdminLayout() {
       >
         <div className="flex h-14 items-center justify-between border-b border-slate-200 px-4">
           <Link
-            to="/categories"
+            to="/admin/categories"
             className="flex min-h-11 items-center gap-2 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
             aria-label="À la carte - về trang quản trị"
           >

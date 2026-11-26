@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Thực đơn - Tịnh Mộc Chay</title>
+    <style>
+        body { background: #faf8f3; text-align: center; font-family: sans-serif; padding: 30px 10px; }
+        #flipbook { max-width: 900px; margin: 20px auto; }
+        button { padding: 8px 24px; margin: 0 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <a href="index.html">← Về trang chủ</a>
+    <h1>Thực đơn Tịnh Mộc Chay</h1>
+
+    <div id="flipbook"></div>
+
+    <button id="btnPrev">‹ Trước</button>
+    <button id="btnNext">Sau ›</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+
+        async function start() {
+            const pdf = await pdfjsLib.getDocument('thuc-don.pdf').promise;
+            const images = [];
+            let w = 0, h = 0;
+
+            // Vẽ từng trang PDF thành ảnh
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const viewport = page.getViewport({ scale: 1.5 });
+                if (i === 1) { w = viewport.width; h = viewport.height; }
+
+                const canvas = document.createElement('canvas');
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+                images.push(canvas.toDataURL('image/jpeg', 0.85));
+            }
+
+            // Tạo sách lật
+            const book = new St.PageFlip(document.getElementById('flipbook'), {
+                width: w, height: h, size: 'stretch',
+                minWidth: 280, maxWidth: 600, minHeight: 380, maxHeight: 900,
+                showCover: true
+            });
+            book.loadFromImages(images);
+
+            document.getElementById('btnPrev').onclick = () => book.flipPrev();
+            document.getElementById('btnNext').onclick = () => book.flipNext();
+        }
+        start();
+    </script>
+</body>
+</html>
+

@@ -462,7 +462,7 @@ function MenuItemsPage() {
                   <p className="text-sm text-slate-500">
                     Chưa có nhóm tùy chọn.{' '}
                     <Link
-                      to="/menu-option-groups"
+                      to="/admin/menu-option-groups"
                       className="font-medium text-slate-700 underline underline-offset-2"
                     >
                       Tạo nhóm tùy chọn

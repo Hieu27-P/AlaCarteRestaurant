@@ -152,7 +152,7 @@ function MenuOptionsPage() {
             </button>
           ) : (
             <Link
-              to="/menu-option-groups"
+              to="/admin/menu-option-groups"
               className="inline-flex min-h-11 items-center justify-center rounded-md border border-slate-200 bg-white px-3 text-sm font-medium text-slate-700 hover:bg-slate-50"
             >
               Tạo nhóm tùy chọn
@@ -214,7 +214,7 @@ function MenuOptionsPage() {
             </button>
           ) : (
             <Link
-              to="/menu-option-groups"
+              to="/admin/menu-option-groups"
               className="inline-flex min-h-11 items-center rounded-md border border-slate-200 px-3 text-sm font-medium text-slate-700 hover:bg-slate-50"
             >
               Tạo nhóm tùy chọn
@@ -314,7 +314,7 @@ function MenuOptionsPage() {
               {optionGroups.length === 0 && (
                 <p className="mt-1 text-xs text-slate-500">
                   Chưa có nhóm.{' '}
-                  <Link to="/menu-option-groups" className="underline underline-offset-2">
+                  <Link to="/admin/menu-option-groups" className="underline underline-offset-2">
                     Tạo nhóm tùy chọn
                   </Link>
                 </p>
